@@ -1,0 +1,47 @@
+global proc int InComponentMode()
+
+{
+    int $activeSelMode;
+    string $selection[] = `ls -selection`;
+
+    if ( size($selection) ) // If something is selected
+    {
+
+        // Check if you're in Component Mode (component mask)
+        string $tempySel[] = `ls -hl`;
+        
+        // If components are selected 
+        if ( size($tempySel[0]) )
+        {
+            //print( "\nYou're in Component Mode\n" );
+            $activeSelMode = 1;
+        }
+
+        else
+        {
+            //print( "\nYou're in Object Mode\n" );
+            $activeSelMode = 0;
+        }
+    }
+
+    else
+    {
+        // Check if you're in Component Mode (component mask)
+        string $tempySel[] = `ls -hl`;
+        
+        // If components are selected 
+        if ( size($tempySel[0]) )
+        {
+            //print( "\nYou're in Component Mode\n" );
+            $activeSelMode = 1;
+        }
+        
+        else
+        {
+            //print( "\nNothing is Selected\n" );
+            $activeSelMode = 3;
+        }
+    }
+
+    return $activeSelMode;
+}

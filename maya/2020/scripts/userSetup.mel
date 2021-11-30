@@ -1,0 +1,13 @@
+//CREATE STAFFS MENU v0.1
+
+string $cgruMenuName = "Staffs";
+if(stringArrayCount("cgru_menu", `window -q -menuArray MayaWindow`)) deleteUI cgru_menu;
+menu -l $cgruMenuName -aob 1 -to 1 -p MayaWindow cgru_menu;
+
+//ADD RENDERFARM ITEM
+menuItem -l "Submit To Renderfarm" -ecr 0 -c "python(\"import afanasy; ui = afanasy.UI(); ui.show();\");" -ann "Submit to Afanasy Render Farm.";
+
+
+//ADD FSPY ITEM
+menuItem -l "FSPY Importer" -ecr 0 -c "python(\"import maya_fspy.ui as mfspy_ui; mfspy_ui.maya_fspy_ui(); \");" -ann "Launch the fspy maya importer.";
+

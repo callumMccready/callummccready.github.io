@@ -1,0 +1,32 @@
+//	Armored Wolf - Juan Hernández
+//	DuplicateLights.mel 26/Jan/18
+
+//	Description:
+//	Create a mirror duplicate of the selected lights.
+
+{
+
+$lightSel = `ls -sl -type "transform"`;
+
+
+for ($obj in $lightSel)
+{	
+	select $obj; BakeCustomPivot;							// Bake the pivot in case the transformations were frozen.
+    float $lightPos[]   = `xform -q -t -ws $obj`;			// Get the object's current position.
+	float $lightRot[]   = `xform -q -ro -ws $obj`;
+	float $lightScale[] = `xform -q -s -ws $obj`;
+
+	string $lightMirror = ($obj + "_mirror");				// Set a new name for the mirror Obj.
+
+	catchQuiet(`delete $lightMirror`);	
+	duplicate -rr -n $lightMirror;
+
+	xform -ws -t (-$lightPos[0]) $lightPos[1] $lightPos[2] $lightMirror;
+	xform -ws -ro ($lightRot[0]) (-$lightRot[1]) (-$lightRot[2]) $lightMirror;
+	xform -ws -s $lightScale[0] $lightScale[1] $lightScale[2] $lightMirror;
+
+}
+
+select $lightSel;		// Select the original light.
+
+}

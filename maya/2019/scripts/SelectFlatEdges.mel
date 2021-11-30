@@ -1,0 +1,15 @@
+//	Description:
+//  Select all the edges of the mesh first and then run this script
+
+proc SelectFlatEdges() {
+        if (size(`filterExpand -sm 32`)){   // EDGES selection check
+                polySelectConstraint -t 0x8000;
+                resetPolySelectConstraint;
+                polySelectConstraint -m 2 -a on -ab 0 0;
+                resetPolySelectConstraint; 
+                polySelectConstraint -t 0x8000; 
+                resetPolySelectConstraint;
+        }                
+} 
+
+SelectFlatEdges();

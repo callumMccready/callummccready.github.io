@@ -1,0 +1,1090 @@
+global proc shelf_Armored () {
+    global string $gBuffStr;
+    global string $gBuffStr0;
+    global string $gBuffStr1;
+
+
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Enable Anti-Alias" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Armored Config" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "smoothCurve.png" 
+        -image1 "smoothCurve.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "camera -e -filmFit vertical persp;\n\n//setAttr \"perspShape.nearClipPlane\" 0.1;\n//setAttr \"perspShape.farClipPlane\" 10000;\n\nsetAttr \"hardwareRenderingGlobals.multiSampleEnable\" 1;\nsetAttr \"hardwareRenderingGlobals.lineAAEnable\" 1;" 
+        -sourceType "mel" 
+        -doubleClickCommand "setAttr \"hardwareRenderingGlobals.multiSampleEnable\" 0;\nsetAttr \"hardwareRenderingGlobals.lineAAEnable\" 0;" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Toggle Camera Tumble Pivot ON and OFF" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Tumble Object Toggle" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "tumble.png" 
+        -image1 "tumble.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "//Set tool setting \"-objectTumble\" to the opposite of itself.\ntumbleCtx -e -objectTumble ( !`tumbleCtx -q -objectTumble tumbleContext` ) tumbleContext;\n\n//Set tool back to selection tool (\"Q\").\nsetToolTo $gSelect;\n\n//More info:\n//http://help.autodesk.com/cloudhelp/2017/ENU/Maya-Tech-Docs/Commands/tumbleCtx.html#flagexists" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Center Pivot (Double click center's to World)" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Center Pivot" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "CenterPivot.png" 
+        -image1 "CenterPivot.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "CenterPivot" 
+        -sourceType "mel" 
+        -doubleClickCommand "//Set pivot to world 0.\n\nFreezeTransformations;\t// Freezing transformations first makes the Reset only move the pivot and not the object\nResetTransformations;" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Set selected object(s) transform to the current tool's custom pivot" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Bake Pivot" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "BP" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "menuIconModify.png" 
+        -image1 "menuIconModify.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "BakeCustomPivot" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Select object(s)" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Lattice" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "lattice.png" 
+        -image1 "lattice.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "proc ARC_InteractiveLattice()\n{\n    string $InteractiveLattice[] = `lattice -dv 2 2 2 -oc true`;\n     \n     if( `dragAttrContext -exists \"AttrControlCtx\" ` ) { dragAttrContext -reset; }\n     else { dragAttrContext AttrControlCtx; }\n    \n    dragAttrContext -edit \n        -connectTo ($InteractiveLattice[1] + \"Shape.sDivisions\") \n        -connectTo ($InteractiveLattice[1] + \"Shape.tDivisions\")\n        -connectTo ($InteractiveLattice[1] + \"Shape.uDivisions\")\n        AttrControlCtx;\n        \n    setToolTo AttrControlCtx;\n}\n\nARC_InteractiveLattice();\n" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Hide all lattices" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Lattices" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "Hide Def" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "menuIconDisplay.png" 
+        -image1 "menuIconDisplay.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "HideLattices" 
+        -sourceType "mel" 
+        -doubleClickCommand "ShowLattices" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "zenLoop Verts" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Zen Tools" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "zen" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0 
+        -image "curveCV.png" 
+        -image1 "curveCV.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "python(\"import zen\");\nzenLoop 2 1 0 \"\";" 
+        -sourceType "mel" 
+        -doubleClickCommand "python(\"import zen\");\nzenLoop 2 1 1 \"\";" 
+        -commandRepeatable 1
+        -flat 1
+        -mi "Zen Tools Window" ( "python(\"import zen\");\nevalDeferred(\"zenTools\");" )
+        -mi "Wire Jumbler" ( "FBwireJumbler" )
+        -mi "Comet Rename" ( "source \"cometRename.mel\"; cometRename();" )
+        -mi "Combine Curves" ( "global proc groupUnderTransform()\n{\n    string $selCurves[] = `ls -sl`;\n    makeIdentity -apply true -t 1 -r 1 -s 1 -n 0;\n    select -deselect $selCurves[0];\n    pickWalk -d down;\n    select -add $selCurves[0];\n    parent -r -s;\n    select -r $selCurves[0];\n    \n    source cleanUpScene.mel;deleteEmptyGroups();\n}\n\ngroupUnderTransform;" )
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "BSEP-----" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "SEPARATOR----------" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "C:/Users/Alpha/Documents/maya/2019/prefs/icons/Armored/Transparent Icon.png" 
+        -image1 "C:/Users/Alpha/Documents/maya/2019/prefs/icons/Armored/Transparent Icon.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "print(\"User defined macro\");" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Polygon Plane" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Polygon Plane" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "polyMesh.png" 
+        -image1 "polyMesh.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "CreatePolygonPlane" 
+        -sourceType "mel" 
+        -doubleClickCommand "polyPlane -w 20 -h 20 -sx 1 -sy 1 -ax 1 0 0 -cuv 2 -ch 1;" 
+        -commandRepeatable 1
+        -flat 1
+        -mi "X - Side" ( "polyPlane -w 20 -h 20 -sx 1 -sy 1 -ax 1 0 0 -cuv 2 -ch 1;" )
+        -mi "Z - Front" ( "polyPlane -w 20 -h 20 -sx 1 -sy 1 -ax 0 0 1 -cuv 2 -ch 1;" )
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Mirror Instance" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Mirror Instance" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "polyMirrorGeometry.png" 
+        -image1 "polyMirrorGeometry.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "//\tArmored Wolf - Juan Hernández\n//\tInstanceMirror.mel 11/Jan/18\n\n//\tDescription:\n//\tThis script creates an instance of your selection.\n//  Note: this script creates 2 groups that you will need to ungroup manually\n//        or with the complementing cleanup script\n\n\n{\nstring $selection[] = `ls -selection`;\n\n  //  We make a group from our selection and rename it.\n\ndoGroup 1 1 1;\nstring $groupSel[] = `ls -selection`;\nrename $groupSel[0] \"G_Original1\";\n\n  //  We instance the entire group so we can keep the mirror while transforming in object mode.\n\ninstance; scale -r -1 1 1;\nstring $groupSel[] = `ls -selection`;\nrename $groupSel[0] \"G_Instance1\";\n}" 
+        -sourceType "mel" 
+        -doubleClickCommand "select \"G_Instance*\";\nConvertInstanceToObject;\n\nselect \"G_Original*\" \"G_Instance*\";\nungroup;" 
+        -commandRepeatable 1
+        -flat 1
+        -mi "Single Instance to Object" ( "//  Instance cleanup script.\n\n  //Select the Groups instead of the objects inside.\n\npickWalk -d up;\nstring $selection[] = `ls -selection`;\nstring $tempString;\nstring $tempSel;\n\n\n\nif (size($selection) < 2)\n{\n\t$tempSel = `substring $selection[0] 1 (size($selection[0])-1)`;\n\n\tif ($tempSel == \"G_Original\")\n\t{\n\t\t$tempString = substituteAllString($selection[0], \"Original\", \"Instance\");\n\t}\n\n\telse\n\t{\n\t\t$tempString = substituteAllString($selection[0], \"Instance\", \"Original\");\n\t}\n\n\tselect -add $tempString;\n}\n\n$selection = `ls -selection`;\n\nselect -d \"G_Original*\";\nConvertInstanceToObject;\n\nselect $selection;\nungroup;\n\n\n\n\n\n" )
+        -mi "Selected Instance to Object" ( "//  Instance cleanup script.\n\n  //Select the Groups instead of the objects inside.\n\npickWalk -d up;\nstring $originalSel[] = `ls -selection`;\nstring $selection[];\nstring $tempString;\nstring $tempSel;\n\n\nfor ($obj in $originalSel) \n{\n\tselect $obj;\n\t//pickWalk -d up;\n\t$selection = `ls -selection`;\n\n\tif (size($selection) < 2)\n\t{\n\t\t$tempSel = `substring $selection[0] 1 (size($selection[0])-1)`;\n\n\t\tif ($tempSel == \"G_Original\")\n\t\t{\n\t\t\t$tempString = substituteAllString($selection[0], \"Original\", \"Instance\");\n\t\t}\n\n\t\telse\n\t\t{\n\t\t\t$tempString = substituteAllString($selection[0], \"Instance\", \"Original\");\n\t\t}\n\n\t\tselect -add $tempString;\n\t}\n\n\tstring $newSel[] = `ls -selection`;\n\tselect -d \"G_Original*\";\n\tConvertInstanceToObject;\n\n\tselect $newSel;\n\tungroup;\n} " )
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Smart Combine" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Smart Combine" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "polyUnite.png" 
+        -image1 "polyUnite.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "source dpSmartMeshTools.mel; dpSmartCombine;" 
+        -sourceType "mel" 
+        -doubleClickCommand "source dpSmartMeshTools.mel; dpSmartCombine;\n\nperformPolyMerge 0;\n\ntoggleSelMode;\nchangeSelectMode -object;\ndR_selTypeChanged(\"\");\n\nsource \"AMTools/AMTScripts/ADN_QuickSmooth.mel\";" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Smart Separate" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Smart Separate" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "polySeparate.png" 
+        -image1 "polySeparate.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "source dpSmartMeshTools.mel; dpSmartSeparate;" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Merge vertices / border edges based on selection" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Merge" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "polyMerge.png" 
+        -image1 "polyMerge.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "performPolyMerge 0" 
+        -sourceType "mel" 
+        -doubleClickCommand "PolyMergeOptions" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "BSEP-----" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "SEPARATOR----------" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "C:/Users/Alpha/Documents/maya/2019/prefs/icons/Armored/Transparent Icon.png" 
+        -image1 "C:/Users/Alpha/Documents/maya/2019/prefs/icons/Armored/Transparent Icon.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "print(\"User defined macro\");" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Edge Display" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "EdgeDisplay" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "polySoftEdge.png" 
+        -image1 "polySoftEdge.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "int $edgeDisplay[] = `polyOptions -query -np -se`;\n\nif ($edgeDisplay[0] == true) \n{\n\tpolyOptions -np -ae;\n\tTogglePolyDisplayLimitToSelected;\n\tTogglePolyDisplayEdges;\n\tTogglePolyDisplayLimitToSelected;\n\n\tprint(\"Hard Edges Enabled\");\n}\n \nelse\n{\n\tpolyOptions -np -se;\n\tTogglePolyDisplayLimitToSelected;\n\tTogglePolyDisplaySoftEdges;\n\tTogglePolyDisplayLimitToSelected;\n\n\tprint(\"Soft Edges Enabled\");\n}" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Quick Smooth" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "QuickSmooth" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "polyEditEdgeFlow.png" 
+        -image1 "polyEditEdgeFlow.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "ADN_QuickSmooth;\n\nglobal proc ADN_QuickSmooth() {\n\nstring $Objects[] = `ls -sl -fl`;\nstring $Object;\n\nfor ($Object in $Objects) {\n\nselect $Object;\n\npolySoftEdge -angle 30 -ch 1 $Object;\n\n}\n\nselect $Objects;\n\nprint \"All $Objectect(s) in your selection were automatically smoothed !\\n\";\n\n}" 
+        -sourceType "mel" 
+        -doubleClickCommand "source \"AMTools/AMTScripts/ADN_QuickSmooth.mel\";\ndelete -ch;" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Interactive Bool Difference" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Interactive Boolean Difference" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "polyBooleansDifference.png" 
+        -image1 "polyBooleansDifference.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "{\npolyCBoolOp -op 2 -ch 1 -preserveColor 1 -classification 1;\n//sets -e -forceElement initialShadingGroup;\t// Uncomment if you want to reassign the default Lambert material.\nrename MAINObject_Bool;\nselect -r \"transform*\";\n\nstring $lastSel[] = `ls -sl -tail 1`;\nselect $lastSel;\n\nstring $allObjs_DBE[] = `ls -sl`;\n        for($x=0;$x<size($allObjs_DBE);$x++) {\n        rename $allObjs_DBE[$x] (\"temp_transfrom\" + $x);\n        }\n\nselect -r \"transform*\";\nselect -tgl -vis \"transform*\";\n\nstring $selected_DBE[] = `ls -sl -dag -leaf`;\nfor ($each_DBE in $selected_DBE)\n{\n\tsetAttr ($each_DBE +\".intermediateObject\") 0;\n\tsetAttr ($each_DBE +\".overrideEnabled\") 1;\n\tsetAttr ($each_DBE +\".overrideShading\") 0;\n}\n\nshowHidden -a;\nrename polyCBoolOp1 Boolean_difbox;\nparent -w;\nCenterPivot;\n              int $inViewPref_DboxE = `optionVar -q inViewMessageEnable`;\n              optionVar -iv inViewMessageEnable false;\ndoGroup 0 1 1;\noptionVar -iv inViewMessageEnable $inViewPref_DboxE;\nsource cleanUpScene.mel;\ndeleteEmptyGroups();\nselect -cl;\n}" 
+        -sourceType "mel" 
+        -doubleClickCommand "string $ObjectNoCheck_CB[] = `ls -sl`;                          // check number of seleced objects\n   if ( size($ObjectNoCheck_CB) == 0 ) {\n\t   inViewMessage -amg (\"<span style=\\\"color:#ff5d5d;\\\"> INFO: </span> Select MAIN object only!\" ) -fade -pos midCenterTop -fontSize 9;\n\t   print \"INFO -- Select MAIN object only!  - Nothing is selected so ClearBox doesn't know what to clear. Select boolean result!\"; \n   }  \n\t\n   if ( size($ObjectNoCheck_CB)  == 1) {\n\t\t  if(gmatch($ObjectNoCheck_CB[0], \"MAINObject_Bool*\")){\n\t\t\t\trename polySurface;                           // Script part\n\t\t\t\tDeleteHistory;\n\t\t\t\t//sets -e -forceElement initialShadingGroup;\n\t\t\t\tselect -cl;\n\t\t\t\tDeleteHistory;\n\t\t\t\tselect -r \"transform*\";\n\t\t\t\tdoDelete;\n\t\t\t\tsource cleanUpScene.mel;\n\t\t\t\tdeleteEmptyGroups();\n\t\t\t}\n\t\t\telse {\n\t\t\t  inViewMessage -amg (\"<span style=\\\"color:#ff5d5d;\\\"> INFO: </span> Select MAIN object only!\" ) -fade -pos midCenterTop -fontSize 9;\n\t\t\t  print \"INFO -- Select MAIN object only! - You have selected wrong object. Select correct one!\";   \n\t\t\t}\n   }\n   \n   if ( size($ObjectNoCheck_CB) >= 2 ) {\n\t   inViewMessage -amg (\"<span style=\\\"color:#ff5d5d;\\\"> INFO: </span> Select MAIN object only!\" ) -fade -pos midCenterTop -fontSize 9; \n\t   print \"INFO -- Select MAIN object only!  - You have selected 2 or more objects. Make sure to select only correct one!\"; \n   }\n" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Boolean Slice" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "BooleanPanel" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "srfIntersect.png" 
+        -image1 "srfIntersect.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "source \"AMTools/AMTScripts/ADN_BooleanPanel.mel\";" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "BSEP-----" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "SEPARATOR----------" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "C:/Users/Alpha/Documents/maya/2019/prefs/icons/Armored/Transparent Icon.png" 
+        -image1 "C:/Users/Alpha/Documents/maya/2019/prefs/icons/Armored/Transparent Icon.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "print(\"User defined macro\");" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Select NGons" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Select NGONS" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "C:/Users/Alpha/Documents/maya/2019/prefs/icons/Armored/Select NGons.png" 
+        -image1 "C:/Users/Alpha/Documents/maya/2019/prefs/icons/Armored/Select NGons.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "proc ARC_SelectNGons()\n{\n    resetPolySelectConstraint;\n    polySelectConstraint -mode 3 -type 8 -size 3; polySelectConstraint -mode 0;\n}\n\nproc ARC_SelectTriangles()\n{\n    resetPolySelectConstraint;\n    polySelectConstraint -mode 3 -type 8 -size 1; polySelectConstraint -mode 0;\n}\n\nproc ARC_DeselectNonQuads()\n{\n    resetPolySelectConstraint;\n    polySelectConstraint -mode 2 -type 8 -size 2; polySelectConstraint -mode 0;\n}\n\nproc ARC_TriangleCount()\n{\n    ARC_SelectTriangles();\n    int $selCount[] = `polyEvaluate -faceComponent`;\n    string $message = \"<span style=\\\"color:#FF5151;\\\"> \"+ $selCount[0] + \"</span> Triangle/s found\";\n    inViewMessage -smg ($message) -pos midCenter -fade ;\n    print($selCount);\n}\n\n\nproc ARC_NGonCount()\n{\n    ARC_SelectNGons();\n    int $selCount[] = `polyEvaluate -faceComponent`;\n    string $message = \"<span style=\\\"color:#FF5151;\\\"> \"+ $selCount[0] + \"</span> NGon/s found\";\n    inViewMessage -smg ($message) -pos midCenter -fade ;\n    print($selCount);\n}\n\n//ARC_TriangleCount();\nARC_NGonCount();\n\n\n\n\n" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Select Trianglees" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Select Triangles" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "C:/Users/Alpha/Documents/maya/2019/prefs/icons/Armored/Select Triangles.png" 
+        -image1 "C:/Users/Alpha/Documents/maya/2019/prefs/icons/Armored/Select Triangles.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "proc ARC_SelectNGons()\n{\n    resetPolySelectConstraint;\n    polySelectConstraint -mode 3 -type 8 -size 3; polySelectConstraint -mode 0;\n}\n\nproc ARC_SelectTriangles()\n{\n    resetPolySelectConstraint;\n    polySelectConstraint -mode 3 -type 8 -size 1; polySelectConstraint -mode 0;\n}\n\nproc ARC_DeselectNonQuads()\n{\n    resetPolySelectConstraint;\n    polySelectConstraint -mode 2 -type 8 -size 2; polySelectConstraint -mode 0;\n}\n\nproc ARC_TriangleCount()\n{\n    ARC_SelectTriangles();\n    int $selCount[] = `polyEvaluate -faceComponent`;\n    string $message = \"<span style=\\\"color:#FF5151;\\\"> \"+ $selCount[0] + \"</span> Triangle/s found\";\n    inViewMessage -smg ($message) -pos midCenter -fade ;\n    print($selCount);\n}\n\n\nproc ARC_NGonCount()\n{\n    ARC_SelectNGons();\n    int $selCount[] = `polyEvaluate -faceComponent`;\n    string $message = \"<span style=\\\"color:#FF5151;\\\"> \"+ $selCount[0] + \"</span> NGon/s found\";\n    inViewMessage -smg ($message) -pos midCenter -fade ;\n    print($selCount);\n}\n\nARC_TriangleCount();\n//ARC_NGonCount();\n\n\n\n\n" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Deselect Non Quads" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Deselect Non Quads" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "C:/Users/Alpha/Documents/maya/2019/prefs/icons/Armored/Deselect Non Quads.png" 
+        -image1 "C:/Users/Alpha/Documents/maya/2019/prefs/icons/Armored/Deselect Non Quads.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "proc ARC_SelectNGons()\n{\n    resetPolySelectConstraint;\n    polySelectConstraint -mode 3 -type 8 -size 3; polySelectConstraint -mode 0;\n}\n\nproc ARC_SelectTriangles()\n{\n    resetPolySelectConstraint;\n    polySelectConstraint -mode 3 -type 8 -size 1; polySelectConstraint -mode 0;\n}\n\nproc ARC_DeselectNonQuads()\n{\n    resetPolySelectConstraint;\n    polySelectConstraint -mode 2 -type 8 -size 2; polySelectConstraint -mode 0;\n}\n\nproc ARC_TriangleCount()\n{\n    ARC_SelectTriangles();\n    int $selCount[] = `polyEvaluate -faceComponent`;\n    string $message = \"<span style=\\\"color:#FF5151;\\\"> \"+ $selCount[0] + \"</span> Triangle/s found\";\n    inViewMessage -smg ($message) -pos midCenter -fade ;\n    print($selCount);\n}\n\nproc ARC_NGonCount()\n{\n    ARC_SelectNGons();\n    int $selCount[] = `polyEvaluate -faceComponent`;\n    string $message = \"<span style=\\\"color:#FF5151;\\\"> \"+ $selCount[0] + \"</span> NGon/s found\";\n    inViewMessage -smg ($message) -pos midCenter -fade ;\n    print($selCount);\n}\n\n\nARC_DeselectNonQuads();\n//ARC_TriangleCount();\n//ARC_NGonCount();\n\n\n\n\n\n" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "SEPARATOR----------" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "SEPARATOR----------" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "C:/Users/Alpha/Documents/maya/2019/prefs/icons/Armored/Transparent Icon.png" 
+        -image1 "C:/Users/Alpha/Documents/maya/2019/prefs/icons/Armored/Transparent Icon.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "print(\"User defined macro\");" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Assign AW Lambert" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Assign AW Lambert" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "C:/Users/Alpha/Documents/maya/2019/prefs/icons/Armored/Light Lambert.svg" 
+        -image1 "C:/Users/Alpha/Documents/maya/2019/prefs/icons/Armored/Light Lambert.svg" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "//  Assigns the default Lambert material to your selection\n//  and deletes unused materials.\n\n\nsets -e -forceElement initialShadingGroup;\nhyperShadePanelMenuCommand(\"hyperShadePanel1\", \"deleteUnusedNodes\");\n\n" 
+        -sourceType "mel" 
+        -doubleClickCommand "//\tArmored Wolf - Juan Hernández\n//\tAssign_awLambert - 13/Feb/18\n\n//\tDescription:\n//\tThis script assigns a dark Lambert material to every object in your selection.\n\n{\nstring $selection[] = `ls -selection`;\n\n  // Check if awDarkLambert material already exists in the hypershade\nif( `objExists awDarkLambert` ) { hyperShade -assign awDarkLambert; }\n\n// Create awDarkLambert because it doesn't exist\nelse\n{\t\n\tshadingNode -asShader lambert -name \"awDarkLambert\";       \n    setAttr \"awDarkLambert.color\" -type double3 0.15 0.15 0.15;\n\t\n\tselect $selection;\n\thyperShade -assign awDarkLambert;\n}\n\n\n//  Deletes unused materials.\nhyperShadePanelMenuCommand(\"hyperShadePanel1\", \"deleteUnusedNodes\");\n}" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Assign AW Blinn" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Assign AW Blinn" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "C:/Users/Alpha/Documents/maya/2019/prefs/icons/Armored/Light Blinn.svg" 
+        -image1 "C:/Users/Alpha/Documents/maya/2019/prefs/icons/Armored/Light Blinn.svg" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "//\tArmored Wolf - Juan Hernández\n//\tAssign_awBlinn - 26/Nov/17\n//  16/Jan/18 - Code was simplified.\n\n//\tDescription:\n//\tThis script assigns my soft Blinn material to every object in your selection.\n\n\n{\nstring $selection[] = `ls -selection`;\n\n  // Check if awBlinn material already exists in the hypershade\nif( `objExists awBlinn` ) { hyperShade -assign awBlinn; }\n\n// Create awBlinn because it doesn't exist\nelse\n{\t\n\tshadingNode -asShader blinn -name \"awBlinn\";\n\t//setAttr \"awBlinn.color\" -type double3 0.15 0.15 0.15;\n    setAttr \"awBlinn.eccentricity\" 0.5;\n    setAttr \"awBlinn.specularRollOff\" 0.7;\n\t\n\tselect $selection;\n\thyperShade -assign awBlinn;\n}\n\n\n//  Deletes unused materials.\nhyperShadePanelMenuCommand(\"hyperShadePanel1\", \"deleteUnusedNodes\");\n}" 
+        -sourceType "mel" 
+        -doubleClickCommand "//\tArmored Wolf - Juan Hernández\n//\tAssign_awDarkBlinn 26/Nov/17\n//  16/Jan/18 - Code was simplified.\n\n//\tDescription:\n//\tThis script assigns my soft Blinn material to every object in your selection.\n\n\n{\nstring $selection[] = `ls -selection`;\n\n  // Check if awDarkBlinn material already exists in the hypershade\nif( `objExists awDarkBlinn` ) { hyperShade -assign awDarkBlinn; }\n\n// Create awDarkBlinn because it doesn't exist\nelse\n{\t\n\tshadingNode -asShader blinn -name \"awDarkBlinn\";\n\tsetAttr \"awDarkBlinn.color\" -type double3 0.15 0.15 0.15;\n    setAttr \"awDarkBlinn.eccentricity\" 0.5;\n    setAttr \"awDarkBlinn.specularRollOff\" 0.7;\n\t\n\tselect $selection;\n\thyperShade -assign awDarkBlinn;\n}\n\n\n//  Deletes unused materials.\nhyperShadePanelMenuCommand(\"hyperShadePanel1\", \"deleteUnusedNodes\");\n}" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Assign AW Dark Rough Blinn" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Assign AW Blinn" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "C:/Users/Alpha/Documents/maya/2019/prefs/icons/Armored/Dark Rough Blinn.svg" 
+        -image1 "C:/Users/Alpha/Documents/maya/2019/prefs/icons/Armored/Dark Rough Blinn.svg" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "//\tArmored Wolf - Juan Hernández\n//\tAssign_awDarkRough 22/Jun/19\n\n//\tDescription:\n//\tThis script assigns a dark rough Blinn material to every object in your selection.\n\n\n{\nstring $selection[] = `ls -selection`;\n\n  // Check if awBlinn material already exists in the hypershade\nif( `objExists awDarkRough` ) { hyperShade -assign awDarkRough; }\n\n// Create awDarkRough because it doesn't exist\nelse\n{\t\n\tshadingNode -asShader blinn -name \"awDarkRough\";\n\tsetAttr \"awDarkRough.color\" -type double3 0.048 0.048 0.048;\n    setAttr \"awDarkRough.eccentricity\" 0.66;\n    setAttr \"awDarkRough.specularRollOff\" 0.132;\n\t\n\tselect $selection;\n\thyperShade -assign awDarkRough;\n}\n\n\n//  Deletes unused materials.\nhyperShadePanelMenuCommand(\"hyperShadePanel1\", \"deleteUnusedNodes\");\n}" 
+        -sourceType "mel" 
+        -doubleClickCommand "//\tArmored Wolf - Juan Hernández\n//\tAssign_awBlueBlinn 04/Jul/19\n\n//\tDescription:\n//\tThis script assigns a dark blue Blinn material to every object in your selection.\n\n\n{\nstring $selection[] = `ls -selection`;\n\n  // Check if awBlinn material already exists in the hypershade\nif( `objExists awBlueBlinn` ) { hyperShade -assign awBlueBlinn; }\n\n// Create awBlueBlinn because it doesn't exist\nelse\n{\t\n\tshadingNode -asShader blinn -name \"awBlueBlinn\";\n\tsetAttr \"awBlueBlinn.color\" -type double3 0.024 0.026 0.032;\n\tsetAttr \"awBlueBlinn.diffuse\" 1.0;\n    setAttr \"awBlueBlinn.eccentricity\" 0.615;\n    setAttr \"awBlueBlinn.specularRollOff\" 0.280;\n\t\n\tselect $selection;\n\thyperShade -assign awBlueBlinn;\n}\n\n\n//  Deletes unused materials.\nhyperShadePanelMenuCommand(\"hyperShadePanel1\", \"deleteUnusedNodes\");\n}" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Assign Random Lambert Color" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Assign Random Lambert" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "C:/Users/Alpha/Documents/maya/2019/prefs/icons/Armored/Random Lambert.png" 
+        -image1 "C:/Users/Alpha/Documents/maya/2019/prefs/icons/Armored/Random Lambert.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "//\tArmored Wolf - Juan Hernández\n//\tRandomizeMaterialColor 26/Nov/17\n//  16/Jan/19 - Now reuses the original material if possible instead of generating new materials each time.\n//  19/Jun/19 - Deletes all random lambers and creates new ones instead to simplify the code.\n\n//\tDescription:\n//\tAssigns differently colored lambert materials to your objects.\n\n\n{\n\nscriptEditorInfo -e -suppressWarnings true; scriptEditorInfo -e -suppressInfo true;\n\n// COLOR BIAS------------\n// Increase the bias of a SINGLE color for OPTIMAL results.\n// Use values betwee 0.0 and 1.0\n\nfloat $redB   = 0.6;\nfloat $greenB = 0.0;\nfloat $blueB  = 0.0;\n//------------------------\n\n// You can increase max and min Values for lighter colors.\n\nfloat $minVal = 0.1;\nfloat $maxVal = 1.1;\n\n\n/////////////////////\n//MAIN SCRIPT BEGIN//\n/////////////////////\n\n// Remove whatever material they had in the first place and clean up the hypershade\nsets -e -forceElement initialShadingGroup;\nhyperShadePanelMenuCommand(\"hyperShadePanel1\", \"deleteUnusedNodes\");\n\nstring $selection[] = `ls -selection`;\n\nfor ($obj in $selection)\n{\t\n\t// Create the new material and Assign it.\n\tstring $material = `shadingNode -asShader lambert -name (\"ranMat1\")`;\n\tselect $obj;\n\thyperShade -assign $material;\n\n\t// Randomize and assign colors to attributes.\n\n\t\tfloat $matColor[] = { \n\t\t\t\t\t\t\t\t(rand ( $minVal + $redB/2,   $maxVal - ( $greenB + $blueB  ) )), \n\t\t\t\t\t\t\t\t(rand ( $minVal + $greenB/2, $maxVal - ( $redB   + $blueB  ) )), \n\t\t\t\t\t\t\t\t(rand ( $minVal + $blueB/2,  $maxVal - ( $redB   + $greenB ) ))  };\n\n\t\tsetAttr ($material + \".color\") -type double3 $matColor[0] $matColor[1] $matColor[2];\n}\n\nselect $selection; \n\n}\n" 
+        -sourceType "mel" 
+        -doubleClickCommand "//\tArmored Wolf - Juan Hernández\n//\tRandomizeMaterialColor 26/Nov/17\n//  16/Jan/19 - Now reuses the original material if possible instead of generating new materials each time.\n//  19/Jun/19 - Deletes all random lambers and creates new ones instead to simplify the code.\n\n//\tDescription:\n//\tAssigns differently colored blinn materials to your objects.\n\n\n{\n\nscriptEditorInfo -e -suppressWarnings true; scriptEditorInfo -e -suppressInfo true;\n\n// COLOR BIAS------------\n// Increase the bias of a SINGLE color for OPTIMAL results.\n// Use values betwee 0.0 and 1.0\n\nfloat $redB   = 0.6;\nfloat $greenB = 0.0;\nfloat $blueB  = 0.0;\n//------------------------\n\n// You can increase max and min Values for lighter colors.\n\nfloat $minVal = 0.1;\nfloat $maxVal = 1.1;\n\n\n/////////////////////\n//MAIN SCRIPT BEGIN//\n/////////////////////\n\n// Remove whatever material they had in the first place and clean up the hypershade\nsets -e -forceElement initialShadingGroup;\nhyperShadePanelMenuCommand(\"hyperShadePanel1\", \"deleteUnusedNodes\");\n\nstring $selection[] = `ls -selection`;\n\nfor ($obj in $selection)\n{\t\n\t// Create the new material and Assign it.\n\tstring $material = `shadingNode -asShader blinn -name (\"ranMat1\")`;\n\tselect $obj;\n\thyperShade -assign $material;\n\n\t// Randomize and assign colors to attributes.\n\n\t\tfloat $matColor[] = { \n\t\t\t\t\t\t\t\t(rand ( $minVal + $redB/2,   $maxVal - ( $greenB + $blueB  ) )), \n\t\t\t\t\t\t\t\t(rand ( $minVal + $greenB/2, $maxVal - ( $redB   + $blueB  ) )), \n\t\t\t\t\t\t\t\t(rand ( $minVal + $blueB/2,  $maxVal - ( $redB   + $greenB ) ))  };\n\n\t\tsetAttr ($material + \".color\") -type double3 $matColor[0] $matColor[1] $matColor[2];\n}\n\nselect $selection; \n\n}\n" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "SEPARATOR----------" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "SEPARATOR----------" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "C:/Users/Alpha/Documents/maya/2019/prefs/icons/Armored/Transparent Icon.png" 
+        -image1 "C:/Users/Alpha/Documents/maya/2019/prefs/icons/Armored/Transparent Icon.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "print(\"User defined macro\");" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Assign AW Random" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Assign Random Wireframe" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "C:/Users/Alpha/Documents/maya/2019/prefs/icons/Armored/RandomWireframe.png" 
+        -image1 "C:/Users/Alpha/Documents/maya/2019/prefs/icons/Armored/RandomWireframe.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "//\tArmored Wolf - Juan Hernández\n//\tRandomizeWireframeColor.mel 17/Jan/18\n\n//\tDescription:\n//\tAssigns random Wireframe colors to your selected objects.\n\n\n{\n// COLOR BIAS------------\n// I wouldnt go over 10. The more bias you add the less variance you will get. Best to only increase one or two.\n// Eg: red=10, green=0, blue=0.\n// Eg: red=7,  green=0, blue=7.\n// Eg: red=0,  green=0, blue=0.\n\nint $redB   = 0;\nint $greenB = 0;\nint $blueB  = 10;\n//------------------------\n\nint $minVal = 0;    // 0 Works best.\nint $maxVal = 9;    // This value is fine if you introduce any color bias close to 10.\n\n// Keeps the maxValue or Brightness of the wireframe from getting too high as you increase bias.\nfloat $bControl = ($redB + $greenB + $blueB) * 0.1 + 1;\n\nstring $selection[] = `ls -selection`;\n\nfor ($obj in $selection)\n{\n// Randomize and add Bias (also weird I know).\n\tfloat $ranRED   = rand( $minVal + $redB,   $maxVal + $redB/$bControl );\n\tfloat $ranGREEN = rand( $minVal + $greenB, $maxVal + $greenB/$bControl );\n\tfloat $ranBLUE  = rand( $minVal + $blueB,  $maxVal + $blueB/$bControl );\n\t\n// We use the 0.1 Multiplier to scale down our integers into smaller values\n\tcolor -rgb ($ranRED * 0.1) ($ranGREEN * 0.1) ($ranBLUE  * 0.1) $obj;\n}\n\nselect $selection;\n}\n" 
+        -sourceType "mel" 
+        -doubleClickCommand "//  Resets the wireframe color to Default.\n\n\ncolor;" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Vitaly Poke" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Vitaly Poke" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "polyPoke.png" 
+        -image1 "polyPoke.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "proc ARC_VitalyPoke()\n{\n    $faceSet = `sets -n faceSet1`;\n\n    ConvertSelectionToContainedEdges;\n    $edgeSet = `sets -n edgeSet1`;\n\n    ConvertSelectionToFaces; PokePolygon;\n\n    select $edgeSet; DeletePolyElements;\n    select -ne $edgeSet; doDelete;\n\n    select $faceSet;\n\tARC_DeselectNonQuads();\n\n\tdelete $faceSet;\n}\n\nproc ARC_DeselectNonQuads()\n{\n    resetPolySelectConstraint;\n    polySelectConstraint -mode 2 -type 8 -size 2; polySelectConstraint -mode 0;\n}\n\nARC_VitalyPoke();" 
+        -sourceType "mel" 
+        -doubleClickCommand "proc ARC_VitalyPoke()\n{\n    $faceSet = `sets -n faceSet1`;\n\n    ConvertSelectionToContainedEdges;\n    $edgeSet = `sets -n edgeSet1`;\n\n    ConvertSelectionToFaces; PokePolygon;\n\n    select $edgeSet; DeletePolyElements;\n    select -ne $edgeSet; doDelete;\n\n    select $faceSet;\n\t//ARC_DeselectNonQuads();\n\n\tdelete $faceSet;\n}\n\nproc ARC_DeselectNonQuads()\n{\n    resetPolySelectConstraint;\n    polySelectConstraint -mode 2 -type 8 -size 2; polySelectConstraint -mode 0;\n}\n\nARC_VitalyPoke();" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Select Flat Edges " 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Limited Dissolve" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "polyReduce.png" 
+        -image1 "polyReduce.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "//Select all the edges of the mesh first and then run this script\n\nproc SelectFlatEdges() {\n        if (size(`filterExpand -sm 32`)){   // EDGES selection check\n                polySelectConstraint -t 0x8000;\n                resetPolySelectConstraint;\n                polySelectConstraint -m 2 -a on -ab 0 0;\n                resetPolySelectConstraint; \n                polySelectConstraint -t 0x8000; \n                resetPolySelectConstraint;\n        }                \n} \n\nSelectFlatEdges();" 
+        -sourceType "mel" 
+        -doubleClickCommand "proc ARC_VitalyPoke()\n{\n    $faceSet = `sets -n faceSet1`;\n\n    ConvertSelectionToContainedEdges;\n    $edgeSet = `sets -n edgeSet1`;\n\n    ConvertSelectionToFaces; PokePolygon;\n\n    select $edgeSet; DeletePolyElements;\n    select -ne $edgeSet; doDelete;\n\n    select $faceSet;\n\t//ARC_DeselectNonQuads();\n\n\tdelete $faceSet;\n}\n\nproc ARC_DeselectNonQuads()\n{\n    resetPolySelectConstraint;\n    polySelectConstraint -mode 2 -type 8 -size 2; polySelectConstraint -mode 0;\n}\n\nARC_VitalyPoke();" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+
+} 

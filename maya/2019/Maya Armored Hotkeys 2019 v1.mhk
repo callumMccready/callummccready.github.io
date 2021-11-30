@@ -1,0 +1,652 @@
+//Maya Preference 2019 (Release 1)
+//
+//
+
+//
+// The runtime commands referenced by the hotkeys
+//
+runTimeCommand
+	-annotation ""
+	-category "Custom Scripts.Armored Colony"
+	-hotkeyCtx ""
+	-commandLanguage "mel"
+	-command ("//\tArmored Colony - Juan Hernández\n//\tForceObjectMode 26/Nov/17\n\n//\tDescription:\n//\tExits Component Mode and enters Object Mode.\n\ntoggleSelMode;\ntoggleSelMode;\nselectMode -object;\n")
+	ForceObjectMode;
+
+runTimeCommand
+	-annotation "Cears selected components before activating the weld tool"
+	-category "Custom Scripts.Armored Colony"
+	-hotkeyCtx ""
+	-commandLanguage "mel"
+	-command ("select -cl;\ndR_DoCmd(\"targetWeldTool\");")
+	ClearWeldTool;
+
+runTimeCommand
+	-annotation ""
+	-category "Custom Scripts.Armored Colony"
+	-hotkeyCtx ""
+	-commandLanguage "mel"
+	-command ("dR_DoCmd(\"bevelPress\");\n\n//Original Command\n//dR_DoCmd(\"bevelPress\"); string $getBevelNode[] = `listHistory -lv 1`; setAttr ($getBevelNode[1] + \".subdivideNgons\") 1;")
+	SuperfastBevel;
+
+runTimeCommand
+	-annotation "Create Pipe from Edge"
+	-category "Custom Scripts.Armored Colony"
+	-hotkeyCtx ""
+	-commandLanguage "mel"
+	-command ("// This is a script I purchased from someone else, so the hotkey won't work unless you already bought it.\n\nsource \"LaunchQuickPipe.mel\";")
+	QuickPipe;
+
+runTimeCommand
+	-annotation ""
+	-category "Custom Scripts.Armored Colony"
+	-hotkeyCtx ""
+	-commandLanguage "mel"
+	-command ("//  Copy the material from your First selection to all others\n\nstring $s[]=`ls -sl`;\nstring $shade[]=`listSets -t 1 -ets -o $s[0]`;\nstring $obj;\n\nfor ($obj in $s)\n{\n\tsets -e -forceElement $shade[0] $obj ;\n}\n")
+	CopyPasteMaterial;
+
+runTimeCommand
+	-annotation ""
+	-category "Custom Scripts.Armored Colony"
+	-hotkeyCtx ""
+	-commandLanguage "mel"
+	-command ("AW_CreatingSmoothingGroup;\n\nglobal proc AW_CreatingSmoothingGroup() {\n\n\tstring $selection[] = `ls -sl -fl`;\n\tConvertSelectionToEdgePerimeter;\n\tstring $selPerimter[] = `ls -sl -fl`;\n\n\tif ( InComponentMode() == 1 )  // \"InComponentMode\" is a custom procedure in your scripts folder and sourced in userSetup.mel\n\t{\n        if ( size($selection) )\n\t\t{\n         \tpolySoftEdge -angle 0;\n\t\t\tselect $selection; ConvertSelectionToContainedEdges;\n\t\t\tpolySoftEdge -angle 180;\n\t\t\tselect $selection;\n\n\t\t\tchangeSelectMode -component;\n\t\t\tselectType -smp 0 -sme 1 -smf 0 -smu 0 -pv 0 -pe 0 -pf 1 -puv 0;\n\t\t\t//select -clear;\n\t\t}\n        else\n        {\n\t\t\tprint (\"\\nError - No Components Selected!\");\n   \t\t\tinViewMessage -smg \"<span style=\\\"color:#FF5151;\\\">ERROR</span> - No Components Selected!\" -fade -pos topCenter ;\n        }\n\t}   \n    else \n    {\n\t\tprint (\"\\nError - No Components Selected!\");\n   \t\tinViewMessage -smg \"<span style=\\\"color:#FF5151;\\\">ERROR</span> - No Components Selected!\" -fade -pos topCenter ;\n    }\n\n}")
+	CreatingSmoothingGroup;
+
+runTimeCommand
+	-annotation ""
+	-category "Custom Scripts.Armored Colony"
+	-hotkeyCtx ""
+	-commandLanguage "mel"
+	-command ("//proc awBridge()\n//{\n\tdelete -ch `ls -sl -o`; performPolyBridgeEdge 0;\n//}\n\n//awBridge();")
+	ArmoredBridge;
+
+runTimeCommand
+	-annotation ""
+	-category "Custom Scripts.Armored Colony"
+	-hotkeyCtx ""
+	-commandLanguage "mel"
+	-command ("evalEcho(\"select `ls -sl`;PolySelectTraverse 2;select `ls -sl`;\")")
+	arc_shrinkSelection;
+
+runTimeCommand
+	-annotation ""
+	-category "Custom Scripts.Armored Colony"
+	-hotkeyCtx ""
+	-commandLanguage "mel"
+	-command ("{\n\nint $switchToObject = 0;\nif ( InComponentMode() == 1 )  // \"InComponentMode\" is a custom script that MUST be in your scripts folder.\n{\n\t  // Switch to Object Mode before the Mirror operation.\n    toggleSelMode; changeSelectMode -object;\n    dR_selTypeChanged(\"\");\n    $switchToObject = 1;\n}\n\nstring $objSel[] = `ls -sl`;\n\npolyMirrorFace  -cutMesh 1 -axis 0 \n-axisDirection 1 -mergeMode 1 -mergeThresholdType 1 -mergeThreshold 0.001 \n-mirrorAxis 2 -mirrorPosition 0 -smoothingAngle 30 -flipUVs 0 -ch 1 $objSel[0];\n\npolyMergeVertex  -d 0.001 -am 1 -ch 1 $objSel[0];\n\n  // Delete History\ndelete -ch;\n\ntoggleSelMode; changeSelectMode -object;\n\n  // Goes back to component mode in necessary.\nif ( $switchToObject )\n{\n    toggleSelMode; changeSelectMode -component;\n    dR_selTypeChanged(\"\");\n}\n\n//select $selection;\n\n}")
+	ArmoredMirrorX;
+
+runTimeCommand
+	-annotation ""
+	-category "Custom Scripts.Armored Colony"
+	-hotkeyCtx ""
+	-commandLanguage "mel"
+	-command ("{\n\nint $switchToObject = 0;\nif ( InComponentMode() == 1 )  // \"InComponentMode\" is a custom script that MUST be in your scripts folder.\n{\n\t  // Switch to Object Mode before the Mirror operation.\n    toggleSelMode; changeSelectMode -object;\n    dR_selTypeChanged(\"\");\n    $switchToObject = 1;\n}\n\nstring $objSel[] = `ls -sl`;\n\npolyMirrorFace  -cutMesh 1 -axis 2 \n-axisDirection 1 -mergeMode 1 -mergeThresholdType 1 -mergeThreshold 0.001 \n-mirrorAxis 2 -mirrorPosition 0 -smoothingAngle 30 -flipUVs 0 -ch 1 $objSel[0];\n\npolyMergeVertex  -d 0.001 -am 1 -ch 1 $objSel[0];\n\n  // Delete History\ndelete -ch;\n\ntoggleSelMode; changeSelectMode -object;\n\n  // Goes back to component mode in necessary.\nif ( $switchToObject )\n{\n    toggleSelMode; changeSelectMode -component;\n    dR_selTypeChanged(\"\");\n}\n\n//select $selection;\n\n}")
+	ArmoredMirrorZ;
+
+runTimeCommand
+	-annotation ""
+	-category "Custom Scripts.Armored Colony"
+	-hotkeyCtx ""
+	-commandLanguage "mel"
+	-command ("global proc AW_SelectInnerHardEdges()\n{\n\tstring $selection[] = `ls -sl`;\n\n\t  // Check's if you're in component mode\n\tint $switchToObject = 0;\n\tif ( InComponentMode() == 1 )  // \"InComponentMode\" is a custom procedure in your scripts folder and sourced in userSetup.mel\n\t{\n        if ( size($selection) )\n\t\t{\n            ConvertSelectionToContainedEdges;\n            invertSelection;\n            string $otherEdges[] = `ls -selection`;\n            \n            resetPolySelectConstraint;\n            polySelectConstraint -m 3 -t 0x8000 -sm 1;\n            resetPolySelectConstraint;\n\n            select -d $otherEdges;\n        }\n        else\n        {\n            resetPolySelectConstraint;\n            polySelectConstraint -m 3 -t 0x8000 -sm 1;\n            resetPolySelectConstraint;\n        }\n\t}   \n    else \n    {\n        changeSelectMode -component;\n        selectType -alc 0 -eg 1;\n\n        resetPolySelectConstraint;\n        polySelectConstraint -m 3 -t 0x8000 -sm 1;\n        resetPolySelectConstraint;\n\n    }\n}\n\nAW_SelectInnerHardEdges();")
+	SelectInnerHardEdges;
+
+runTimeCommand
+	-annotation ""
+	-category "Custom Scripts.Armored Colony"
+	-hotkeyCtx ""
+	-commandLanguage "mel"
+	-command ("dR_setCameraBasedSelection \"off\";\n\nstring $message = \"Select <span style=\\\"color:#FF5151;\\\">Through</span>\";\ninViewMessage -smg ($message) -pos topCenter -fade ;\nprint \"Select Through.\\n\";")
+	arc_selectThroughON;
+
+runTimeCommand
+	-annotation ""
+	-category "Custom Scripts.Armored Colony"
+	-hotkeyCtx ""
+	-commandLanguage "mel"
+	-command ("polyCBoolOp -op 2 -ch 1 -preserveColor 1 -classification 1;")
+	FastDifference;
+
+runTimeCommand
+	-annotation ""
+	-category "Custom Scripts.Armored Colony"
+	-hotkeyCtx ""
+	-commandLanguage "mel"
+	-command ("evalEcho(\"select `ls -sl`;PolySelectTraverse 1;select `ls -sl`;\")")
+	arc_growSelection;
+
+runTimeCommand
+	-annotation ""
+	-category "Custom Scripts.Armored Colony"
+	-hotkeyCtx ""
+	-commandLanguage "mel"
+	-command ("//\tArmored Colony - Juan Hernï¿½ndez\n//\tSnapToGround.mel 26/Nov/17\n\n//\tDescription:\n//\tIndividually snaps every object you selected to the ground/floor\n//\t(group first if you want to maintain their positions relative to eachother)\n\n$mySelection = `ls -sl -type \"transform\"`;\nstring $obj;\n\nfor ($obj in $mySelection) {\n\n    float $BBox[] = `xform -q -ws -bb $obj`;\t\t\t\t\t\t// get the bounding box info\n    //xform -ws -p true -cp $obj;\t\t \t\t\t\t\t\t\t// center pivot\n    float $currentPos[] = `xform -q -ws -sp $obj`;\t\t\t\t\t// get the pivot's current position\n\n    xform -ws -piv $currentPos[0] $BBox[1] $currentPos[2] $obj;\t\t// move Pivot to bottom but keep X and Z the same\n\n\tBakeCustomPivot;\t\t// bake the pivot in case the transformations are frozen\n\tmove -a -moveY 0;\t\t// move the object to world 0 in Y\n\t//setToolTo $gScale;\t\t// activate the Scale tool\n\tsetToolTo $gSelect;\t\t// activate the Select tool\n}")
+	SnapToGround;
+
+runTimeCommand
+	-annotation "Toggles  Angle Constraint for Selections"
+	-category "Custom Scripts.Armored Colony"
+	-hotkeyCtx ""
+	-commandLanguage "mel"
+	-command ("AW_SelectByAngle;\n\nglobal proc AW_SelectByAngle() {\n\n\tglobal int $constraintToggle;\n\tswitch($constraintToggle) {\n\t\tcase 0:\n\t\t\t//print \"Angle Constraint ON.\\n\";\n\t\t\tselectPref -preSelectHilite false;\n\t\t\tdR_selConstraintAngle; dR_setSelConstAngle 5;\n\t\t\tselectPref -preSelectHilite true;\n\t\t\tbreak;\n\t\tcase 1:\n\t\t\t//print \"Angle Constraint OFF.\\n\";\n\t\t\tdR_selConstraintOff; dR_setSelConstAngle 0;\n\t\t\tbreak;\n\t\tdefault:\n\t\t\t$constraintToggle = 0;    \n\t\t\t//print \"Angle Constraint ON.\\n\";\n\t\t\tselectPref -preSelectHilite false;\n\t\t\tdR_selConstraintAngle; dR_setSelConstAngle 5;\n\t\t\tselectPref -preSelectHilite true;\n\t\t\tbreak;\n\t\t}\n\t\t\n\t$constraintToggle++;\n\t\n}")
+	SelectByAngle;
+
+runTimeCommand
+	-annotation ""
+	-category "Custom Scripts.Armored Colony"
+	-hotkeyCtx ""
+	-commandLanguage "mel"
+	-command ("grid -divisions (`grid -q -d`+1) ;")
+	IncreaseGridSubD;
+
+runTimeCommand
+	-annotation ""
+	-category "Custom Scripts.Armored Colony"
+	-hotkeyCtx ""
+	-commandLanguage "mel"
+	-command ("//\tArmored Wolf - Juan Hernández\n//\tRandomizeMaterialColor 26/Nov/17\n//  16/Jan/19 - Now reuses the original material if possible instead of generating new materials each time.\n//  19/Jun/19 - Deletes all random lambers and creates new ones instead to simplify the code.\n\n//\tDescription:\n//\tAssigns differently colored lambert materials to your objects.\n\n\n{\n\nscriptEditorInfo -e -suppressWarnings true; scriptEditorInfo -e -suppressInfo true;\n\n// COLOR BIAS------------\n// Increase the bias of a SINGLE color for OPTIMAL results.\n// Use values betwee 0.0 and 1.0\n\nfloat $redB   = 0.6;\nfloat $greenB = 0.0;\nfloat $blueB  = 0.0;\n//------------------------\n\n// You can increase max and min Values for lighter colors.\n\nfloat $minVal = 0.1;\nfloat $maxVal = 1.1;\n\n\n/////////////////////\n//MAIN SCRIPT BEGIN//\n/////////////////////\n\n// Remove whatever material they had in the first place and clean up the hypershade\nsets -e -forceElement initialShadingGroup;\nhyperShadePanelMenuCommand(\"hyperShadePanel1\", \"deleteUnusedNodes\");\n\nstring $selection[] = `ls -selection`;\n\nfor ($obj in $selection)\n{\t\n\t// Create the new material and Assign it.\n\tstring $material = `shadingNode -asShader lambert -name (\"ranMat1\")`;\n\tselect $obj;\n\thyperShade -assign $material;\n\n\t// Randomize and assign colors to attributes.\n\n\t\tfloat $matColor[] = { \n\t\t\t\t\t\t\t\t(rand ( $minVal + $redB/2,   $maxVal - ( $greenB + $blueB  ) )), \n\t\t\t\t\t\t\t\t(rand ( $minVal + $greenB/2, $maxVal - ( $redB   + $blueB  ) )), \n\t\t\t\t\t\t\t\t(rand ( $minVal + $blueB/2,  $maxVal - ( $redB   + $greenB ) ))  };\n\n\t\tsetAttr ($material + \".color\") -type double3 $matColor[0] $matColor[1] $matColor[2];\n}\n\nselect $selection; \n\n}\n")
+	RandomizeMaterialColor;
+
+runTimeCommand
+	-annotation ""
+	-category "Custom Scripts.Armored Colony"
+	-hotkeyCtx ""
+	-commandLanguage "mel"
+	-command ("grid -divisions (`grid -q -d`-1) ;")
+	DecreaseGridSubD;
+
+runTimeCommand
+	-annotation "CopyPasteFaces"
+	-category "Custom Scripts.Armored Colony"
+	-hotkeyCtx ""
+	-commandLanguage "mel"
+	-command ("source dpSmartMeshTools.mel;\ndpSmartExtractDuplicate(1);\nCenterPivot;\nMoveTool;")
+	SimpleExtractFaces;
+
+runTimeCommand
+	-annotation ""
+	-category "Custom Scripts.Armored Colony"
+	-hotkeyCtx ""
+	-commandLanguage "mel"
+	-command ("source selectEveryNEdge.mel; selectEveryNEdge;")
+	SelectEveryNEdge;
+
+runTimeCommand
+	-annotation ""
+	-category "Custom Scripts.Armored Colony"
+	-hotkeyCtx ""
+	-commandLanguage "mel"
+	-command ("global proc AW_SelectHardEdges()\n{\n\tstring $selection[] = `ls -sl`;\n\n\t  // Check's if you're in component mode\n\tint $switchToObject = 0;\n\tif ( InComponentMode() == 1 )  // \"InComponentMode\" is a custom procedure in your scripts folder and sourced in userSetup.mel\n\t{\n        if ( size($selection) )\n\t\t{\n            ConvertSelectionToEdges;\n            invertSelection;\n            string $otherEdges[] = `ls -selection`;\n            \n            resetPolySelectConstraint;\n            polySelectConstraint -m 3 -t 0x8000 -sm 1;\n            resetPolySelectConstraint;\n\n            select -d $otherEdges;\n        }\n        else\n        {\n            resetPolySelectConstraint;\n            polySelectConstraint -m 3 -t 0x8000 -sm 1;\n            resetPolySelectConstraint;\n        }\n\t}   \n    else \n    {\n        changeSelectMode -component;\n        selectType -alc 0 -eg 1;\n\n        resetPolySelectConstraint;\n        polySelectConstraint -m 3 -t 0x8000 -sm 1;\n        resetPolySelectConstraint;\n\n    }\n}\n\nAW_SelectHardEdges();")
+	SelectHardEdges;
+
+runTimeCommand
+	-annotation ""
+	-category "Custom Scripts.Armored Colony"
+	-hotkeyCtx ""
+	-commandLanguage "mel"
+	-command ("proc selectAdjacent()\n{\n\tstring $selectgrow[] = `ls -sl -fl`;\n\tGrowPolygonSelectionRegion;\n\tselect -d $selectgrow;\n}\n\nselectAdjacent();")
+	GrowSelection;
+
+runTimeCommand
+	-annotation ""
+	-category "Custom Scripts.Armored Colony"
+	-hotkeyCtx ""
+	-commandLanguage "mel"
+	-command ("string $selection[] = `ls -sl -fl`;\n\nfor ($obj in $selection)\n{\n\tselect $obj;\n\n\tCenterPivot;\n\tmove -rpr 0 0 0 ;\n\tmakeIdentity -apply true -t 1 -r 1 -s 1 -n 0 -pn 1;\n}\n\nselect $selection;")
+	ResetObjectToOrigin;
+
+runTimeCommand
+	-annotation ""
+	-category "Custom Scripts.Armored Colony"
+	-hotkeyCtx ""
+	-commandLanguage "mel"
+	-command ("AW_SmoothByAngle;\n\nglobal proc AW_SmoothByAngle() {\n\n\tstring $originalSel[];\n\tstring $selection[];\n\n\tif ( InComponentMode() == 1 )  // \"InComponentMode\" is a custom procedure in your scripts folder and sourced in userSetup.mel\n\t\t{\n\t\t\t$originalSel = `ls -sl -fl`;\n\t\t\ttoggleSelMode; changeSelectMode -object;\n\t\t\tdR_selTypeChanged(\"\");\n\n\t\t\t$selection = `ls -sl -fl`;\n\t\t\tfor ($obj in $selection) { polySoftEdge -angle 30 -ch 1 $obj ; }\n\n\t\t\ttoggleSelMode; changeSelectMode -component; dR_selTypeChanged(\"\");\n\t\t\tselect $originalSel;\n\t\t}   \n    else \n    {\n\t\t // Force object mode just in case.\n\t\ttoggleSelMode; changeSelectMode -object;\n\t\tstring $selection[] = `ls -sl -fl`;\n\t\tstring $obj;\n\n\t\tfor ($obj in $selection) { polySoftEdge -angle 30 -ch 1 $obj ; }\n\t\tselect $selection;\n\n    }\n\n}")
+	SmoothByAngle;
+
+runTimeCommand
+	-annotation ""
+	-category "Custom Scripts.Armored Colony"
+	-hotkeyCtx ""
+	-commandLanguage "mel"
+	-command ("{\n\nint $switchToObject = 0;\nif ( InComponentMode() == 1 )  // \"InComponentMode\" is a custom script that MUST be in your scripts folder.\n{\n\t  // Switch to Object Mode before the Mirror operation.\n    toggleSelMode; changeSelectMode -object;\n    dR_selTypeChanged(\"\");\n    $switchToObject = 1;\n}\n\nstring $objSel[] = `ls -sl`;\n\npolyMirrorFace  -cutMesh 1 -axis 1 \n-axisDirection 1 -mergeMode 1 -mergeThresholdType 1 -mergeThreshold 0.001 \n-mirrorAxis 2 -mirrorPosition 0 -smoothingAngle 30 -flipUVs 0 -ch 1 $objSel[0];\n\npolyMergeVertex  -d 0.001 -am 1 -ch 1 $objSel[0];\n\n  // Delete History\ndelete -ch;\n\ntoggleSelMode; changeSelectMode -object;\n\n  // Goes back to component mode in necessary.\nif ( $switchToObject )\n{\n    toggleSelMode; changeSelectMode -component;\n    dR_selTypeChanged(\"\");\n}\n\n//select $selection;\n\n}")
+	ArmoredMirrorY;
+
+runTimeCommand
+	-annotation ""
+	-category "Custom Scripts.Armored Colony"
+	-hotkeyCtx ""
+	-commandLanguage "mel"
+	-command ("//\tArmored Colony - Juan Hernï¿½ndez\n//\tCutX.mel 26/Nov/17\n\n//\tDescription:\n//\tCuts all selected objects at world X center and deletes the faces on -X.\n\n//Force Object Mode on everything you sdelected.\ntoggleSelMode;\ntoggleSelMode;\nselectMode -object;\n\nstring $selection[] = `ls -selection`;\n\nfor ($obj in $selection)\n{\n\tselect $obj;\n\tstring $cutP[] = `polyCut -deleteFaces 1 -cuttingDirection X`;\n\n\t//For some reason the \"-cutPlaneCenterX 0\" flag doesnt work so we change it after it's made.\n\tsetAttr ($cutP[0] + \".cutPlaneCenterX\") 0;\n} \n\nselect $selection;")
+	CutX;
+
+runTimeCommand
+	-annotation ""
+	-category "Custom Scripts.Armored Colony"
+	-hotkeyCtx ""
+	-commandLanguage "mel"
+	-command ("move -rpr -x 0;")
+	CenterX;
+
+runTimeCommand
+	-annotation ""
+	-category "Custom Scripts.Armored Colony"
+	-hotkeyCtx ""
+	-commandLanguage "mel"
+	-command ("string $wires = `displayPref -q -wsa`;\nstring $panel = `getPanel -wf`;\n\n //If wireframes are completely disabled.\nif ($wires == \"none\")\n{\n\t //Turn them on and enable Wireframe on Shaded afterwards.\n\tdisplayPref -wsa \"full\";\n\tmodelEditor -e -wos true $panel;\n}\n\n //Just toggle Wireframe on Shaded\nelse modelEditor -e -wos ( !`modelEditor -q -wos $panel` ) $panel;")
+	ToggleShadedWireframe;
+
+runTimeCommand
+	-annotation ""
+	-category "Custom Scripts.Armored Colony"
+	-hotkeyCtx ""
+	-commandLanguage "mel"
+	-command ("string $wires = `displayPref -q -wsa`;\nif ($wires == \"none\") displayPref -wsa \"full\";\nelse displayPref -wsa \"none\";")
+	ToggleAllWireframes;
+
+runTimeCommand
+	-annotation ""
+	-category "Custom Scripts.Armored Colony"
+	-hotkeyCtx ""
+	-commandLanguage "mel"
+	-command ("source dpSmartMeshTools.mel;\ndpSmartExtractDuplicate(0);\nCenterPivot;\nMoveTool;")
+	SimpleDuplicateFaces;
+
+runTimeCommand
+	-annotation ""
+	-category "Custom Scripts.Armored Colony"
+	-hotkeyCtx ""
+	-commandLanguage "mel"
+	-command ("dR_setCameraBasedSelection \"on\";\n\nstring $message = \"Select <span style=\\\"color:#FF5151;\\\">Only Visible</span>\";\ninViewMessage -smg ($message) -pos topCenter -fade ;\nprint \"Select Only Visible.\\n\";")
+	arc_selectThroughOFF;
+
+runTimeCommand
+	-annotation ""
+	-category "Custom Scripts.Armored Colony"
+	-hotkeyCtx ""
+	-commandLanguage "mel"
+	-command ("//More the Pivot to the Origin.\n\nFreezeTransformations;\t// Freezing transformations first makes the Reset only move the pivot and not the object\nResetTransformations;")
+	MovePivotToOrigin;
+
+//
+// The name commands referenced by the hotkeys
+//
+nameCommand
+	-annotation "ToggleToolSettingsNameCommand"
+	-sourceType "mel"
+	-command ("ToggleToolSettings")
+	ToggleToolSettingsNameCommand;
+
+nameCommand
+	-annotation "RedoNameCommand"
+	-sourceType "mel"
+	-command ("Redo")
+	RedoNameCommand;
+
+nameCommand
+	-annotation "DecreaseGridSubDNameCommand"
+	-sourceType "mel"
+	-command ("DecreaseGridSubD")
+	DecreaseGridSubDNameCommand;
+
+nameCommand
+	-annotation "IncreaseGridSubDNameCommand"
+	-sourceType "mel"
+	-command ("IncreaseGridSubD")
+	IncreaseGridSubDNameCommand;
+
+nameCommand
+	-annotation "ForceObjectModeNameCommand"
+	-sourceType "mel"
+	-command ("ForceObjectMode")
+	ForceObjectModeNameCommand;
+
+nameCommand
+	-annotation "ExportSelectionNameCommand"
+	-sourceType "mel"
+	-command ("ExportSelection")
+	ExportSelectionNameCommand;
+
+nameCommand
+	-annotation "ScriptEditorNameCommand"
+	-sourceType "mel"
+	-command ("ScriptEditor")
+	ScriptEditorNameCommand;
+
+nameCommand
+	-annotation "SelectEdgeLoopSpNameCommand"
+	-sourceType "mel"
+	-command ("SelectEdgeLoopSp")
+	SelectEdgeLoopSpNameCommand;
+
+nameCommand
+	-annotation "ConvertSelectionToEdgePerimeterNameCommand"
+	-sourceType "mel"
+	-command ("ConvertSelectionToEdgePerimeter")
+	ConvertSelectionToEdgePerimeterNameCommand;
+
+nameCommand
+	-annotation "ReversePolygonNormalsNameCommand"
+	-sourceType "mel"
+	-command ("ReversePolygonNormals")
+	ReversePolygonNormalsNameCommand;
+
+nameCommand
+	-annotation "ToggleShadedWireframeNameCommand"
+	-sourceType "mel"
+	-command ("ToggleShadedWireframe")
+	ToggleShadedWireframeNameCommand;
+
+nameCommand
+	-annotation "SimpleDuplicateFacesNameCommand"
+	-sourceType "mel"
+	-command ("SimpleDuplicateFaces")
+	SimpleDuplicateFacesNameCommand;
+
+nameCommand
+	-annotation "dR_connectToolNameCommand"
+	-sourceType "mel"
+	-command ("dR_connectTool")
+	dR_connectToolNameCommand;
+
+nameCommand
+	-annotation "QuickPipeNameCommand"
+	-sourceType "mel"
+	-command ("QuickPipe")
+	QuickPipeNameCommand;
+
+nameCommand
+	-annotation "MakeLiveNameCommand"
+	-sourceType "mel"
+	-command ("MakeLive")
+	MakeLiveNameCommand;
+
+nameCommand
+	-annotation "ResetObjectToOriginNameCommand"
+	-sourceType "mel"
+	-command ("ResetObjectToOrigin")
+	ResetObjectToOriginNameCommand;
+
+nameCommand
+	-annotation "RandomizeMaterialColorNameCommand"
+	-sourceType "mel"
+	-command ("RandomizeMaterialColor")
+	RandomizeMaterialColorNameCommand;
+
+nameCommand
+	-annotation "SuperfastBevelNameCommand"
+	-sourceType "mel"
+	-command ("SuperfastBevel")
+	SuperfastBevelNameCommand;
+
+nameCommand
+	-annotation "SnapToGroundNameCommand"
+	-sourceType "mel"
+	-command ("SnapToGround")
+	SnapToGroundNameCommand;
+
+nameCommand
+	-annotation "CutXNameCommand"
+	-sourceType "mel"
+	-command ("CutX")
+	CutXNameCommand;
+
+nameCommand
+	-annotation "CenterXNameCommand"
+	-sourceType "mel"
+	-command ("CenterX")
+	CenterXNameCommand;
+
+nameCommand
+	-annotation "SimpleExtractFacesNameCommand"
+	-sourceType "mel"
+	-command ("SimpleExtractFaces")
+	SimpleExtractFacesNameCommand;
+
+nameCommand
+	-annotation "ToggleAllWireframesNameCommand"
+	-sourceType "mel"
+	-command ("ToggleAllWireframes")
+	ToggleAllWireframesNameCommand;
+
+nameCommand
+	-annotation "FastDifferenceNameCommand"
+	-sourceType "mel"
+	-command ("FastDifference")
+	FastDifferenceNameCommand;
+
+nameCommand
+	-annotation "GrowSelectionNameCommand"
+	-sourceType "mel"
+	-command ("GrowSelection")
+	GrowSelectionNameCommand;
+
+nameCommand
+	-annotation "SelectEveryNEdgeNameCommand"
+	-sourceType "mel"
+	-command ("SelectEveryNEdge")
+	SelectEveryNEdgeNameCommand;
+
+nameCommand
+	-annotation "SelectEdgeRingSpNameCommand"
+	-sourceType "mel"
+	-command ("SelectEdgeRingSp")
+	SelectEdgeRingSpNameCommand;
+
+nameCommand
+	-annotation "ClearWeldToolNameCommand"
+	-sourceType "mel"
+	-command ("ClearWeldTool")
+	ClearWeldToolNameCommand;
+
+nameCommand
+	-annotation "ShowShadingGroupAttributeEditorNameCommand"
+	-sourceType "mel"
+	-command ("ShowShadingGroupAttributeEditor")
+	ShowShadingGroupAttributeEditorNameCommand;
+
+nameCommand
+	-annotation "SelectByAngleNameCommand"
+	-sourceType "mel"
+	-command ("SelectByAngle")
+	SelectByAngleNameCommand;
+
+nameCommand
+	-annotation "ShowAllNameCommand"
+	-sourceType "mel"
+	-command ("ShowAll")
+	ShowAllNameCommand;
+
+nameCommand
+	-annotation "SmoothByAngleNameCommand"
+	-sourceType "mel"
+	-command ("SmoothByAngle")
+	SmoothByAngleNameCommand;
+
+nameCommand
+	-annotation "SelectHardEdgesNameCommand"
+	-sourceType "mel"
+	-command ("SelectHardEdges")
+	SelectHardEdgesNameCommand;
+
+nameCommand
+	-annotation "SelectInnerHardEdgesNameCommand"
+	-sourceType "mel"
+	-command ("SelectInnerHardEdges")
+	SelectInnerHardEdgesNameCommand;
+
+nameCommand
+	-annotation "CreatingSmoothingGroupNameCommand"
+	-sourceType "mel"
+	-command ("CreatingSmoothingGroup")
+	CreatingSmoothingGroupNameCommand;
+
+nameCommand
+	-annotation "Click Drag Object"
+	-sourceType "mel"
+	-command ("bt_clickDragObj")
+	bt_clickDragNamedCommand;
+
+nameCommand
+	-annotation "MovePivotToOriginNameCommand"
+	-sourceType "mel"
+	-command ("MovePivotToOrigin")
+	MovePivotToOriginNameCommand;
+
+nameCommand
+	-annotation "CopyPasteMaterialNameCommand"
+	-sourceType "mel"
+	-command ("CopyPasteMaterial")
+	CopyPasteMaterialNameCommand;
+
+nameCommand
+	-annotation "ArmoredMirrorYNameCommand"
+	-sourceType "mel"
+	-command ("ArmoredMirrorY")
+	ArmoredMirrorYNameCommand;
+
+nameCommand
+	-annotation "ArmoredMirrorZNameCommand"
+	-sourceType "mel"
+	-command ("ArmoredMirrorZ")
+	ArmoredMirrorZNameCommand;
+
+nameCommand
+	-annotation "ArmoredMirrorXNameCommand"
+	-sourceType "mel"
+	-command ("ArmoredMirrorX")
+	ArmoredMirrorXNameCommand;
+
+nameCommand
+	-annotation "ArmoredBridgeNameCommand"
+	-sourceType "mel"
+	-command ("ArmoredBridge")
+	ArmoredBridgeNameCommand;
+
+nameCommand
+	-annotation "UngroupNameCommand"
+	-sourceType "mel"
+	-command ("Ungroup")
+	UngroupNameCommand;
+
+nameCommand
+	-annotation "arc_selectThroughOFFNameCommand"
+	-sourceType "mel"
+	-command ("arc_selectThroughOFF")
+	arc_selectThroughOFFNameCommand;
+
+nameCommand
+	-annotation "arc_selectThroughONNameCommand"
+	-sourceType "mel"
+	-command ("arc_selectThroughON")
+	arc_selectThroughONNameCommand;
+
+nameCommand
+	-annotation "arc_growSelectionNameCommand"
+	-sourceType "mel"
+	-command ("arc_growSelection")
+	arc_growSelectionNameCommand;
+
+nameCommand
+	-annotation "arc_shrinkSelectionNameCommand"
+	-sourceType "mel"
+	-command ("arc_shrinkSelection")
+	arc_shrinkSelectionNameCommand;
+
+//
+// The user hotkeys
+//
+//
+// The hotkey set
+//
+hotkeySet -source "Maya_Default" -current Maya_Armored_Hotkeys_2019_v1;
+//
+// The hotkey contexts and hotkeys
+//
+hotkey -keyShortcut "2" -ctl -name ("");
+hotkey -keyShortcut "x" -ctl -sht -name ("FastDifferenceNameCommand");
+hotkey -keyShortcut "r" -ctl -name ("ResetObjectToOriginNameCommand");
+hotkey -keyShortcut "F5" -name ("ScriptEditorNameCommand");
+hotkey -keyShortcut "s" -alt -sht -name ("CreatingSmoothingGroupNameCommand");
+hotkey -keyShortcut "s" -alt -name ("SmoothByAngleNameCommand");
+hotkey -keyShortcut "x" -sht -releaseName ("");
+hotkey -keyShortcut "0" -ctl -name ("CenterXNameCommand");
+hotkey -keyShortcut "x" -sht -name ("ArmoredMirrorXNameCommand");
+hotkey -keyShortcut "u" -ctl -name ("UngroupNameCommand");
+hotkey -keyShortcut "r" -sht -name ("SnapToGroundNameCommand");
+hotkey -keyShortcut "PgUp" -sht -name ("IncreaseGridSubDNameCommand");
+hotkey -keyShortcut "c" -releaseName ("");
+hotkey -keyShortcut "Space" -ctl -name ("ToggleFullScreenModeNameCommand");
+hotkey -keyShortcut "c" -name ("arc_selectThroughOFFNameCommand");
+hotkey -keyShortcut "l" -ctl -name ("SelectEdgeLoopSpNameCommand");
+hotkey -keyShortcut "v" -sht -releaseName ("");
+hotkey -keyShortcut "v" -sht -name ("");
+hotkey -keyShortcut "End" -name ("arc_shrinkSelectionNameCommand");
+hotkey -keyShortcut "w" -alt -name ("ToggleAllWireframesNameCommand");
+hotkey -keyShortcut "Return" -releaseName ("");
+hotkey -keyShortcut "g" -alt -name ("QuickPipeNameCommand");
+hotkey -keyShortcut "e" -alt -name ("SelectHardEdgesNameCommand");
+hotkey -keyShortcut "m" -ctl -name ("MakeLiveNameCommand");
+hotkey -keyShortcut "z" -ctl -sht -name ("RedoNameCommand");
+hotkey -keyShortcut "b" -ctl -alt -sht -name ("");
+hotkey -keyShortcut "u" -releaseName ("");
+hotkey -keyShortcut "u" -name ("ClearWeldToolNameCommand");
+hotkey -keyShortcut "x" -ctl -name ("CutSelectedNameCommand");
+hotkey -keyShortcut "e" -alt -sht -name ("SelectInnerHardEdgesNameCommand");
+hotkey -keyShortcut "e" -ctl -name ("ExportSelectionNameCommand");
+hotkey -keyShortcut "3" -alt -name ("ConvertSelectionToFacesNameCommand");
+hotkey -keyShortcut "l" -name ("LockCurveLengthNameCommand");
+hotkey -keyShortcut "l" -releaseName ("UnlockCurveLengthNameCommand");
+hotkey -keyShortcut "w" -ctl -sht -name ("bt_clickDragNamedCommand");
+hotkey -keyShortcut "0" -ctl -alt -name ("");
+hotkey -keyShortcut "l" -sht -name ("SelectEdgeRingSpNameCommand");
+hotkey -keyShortcut "a" -alt -name ("SelectByAngleNameCommand");
+hotkey -keyShortcut "F1" -name ("ToggleToolSettingsNameCommand");
+hotkey -keyShortcut "m" -name ("ShowShadingGroupAttributeEditorNameCommand");
+hotkey -keyShortcut "m" -releaseName ("");
+hotkey -keyShortcut "o" -alt -name ("MovePivotToOriginNameCommand");
+hotkey -keyShortcut "m" -sht -name ("RandomizeMaterialColorNameCommand");
+hotkey -keyShortcut "f" -ctl -name ("ReversePolygonNormalsNameCommand");
+hotkey -keyShortcut "1" -alt -name ("ConvertSelectionToVerticesNameCommand");
+hotkey -keyShortcut "w" -sht -name ("ToggleShadedWireframeNameCommand");
+hotkey -keyShortcut "n" -sht -name ("SelectEveryNEdgeNameCommand");
+hotkey -keyShortcut "d" -ctl -sht -name ("SimpleDuplicateFacesNameCommand");
+hotkey -keyShortcut "y" -sht -name ("ArmoredMirrorYNameCommand");
+hotkey -keyShortcut "+" -ctl -name ("");
+hotkey -keyShortcut "Home" -name ("arc_growSelectionNameCommand");
+hotkey -keyShortcut "x" -ctl -alt -name ("CutXNameCommand");
+hotkey -keyShortcut "m" -alt -name ("CopyPasteMaterialNameCommand");
+hotkey -keyShortcut "PgDown" -sht -name ("DecreaseGridSubDNameCommand");
+hotkey -keyShortcut "Up" -sht -name ("GrowSelectionNameCommand");
+hotkey -keyShortcut "w" -alt -sht -name ("");
+hotkey -keyShortcut "b" -sht -releaseName ("");
+hotkey -keyShortcut "b" -sht -name ("ArmoredBridgeNameCommand");
+hotkey -keyShortcut "e" -ctl -sht -name ("SimpleExtractFacesNameCommand");
+hotkey -keyShortcut "z" -sht -name ("ArmoredMirrorZNameCommand");
+hotkey -keyShortcut "Space" -sht -name ("ForceObjectModeNameCommand");
+hotkey -keyShortcut "2" -alt -name ("ConvertSelectionToEdgesNameCommand");
+hotkey -keyShortcut "s" -sht -name ("ConvertSelectionToEdgePerimeterNameCommand");
+hotkey -keyShortcut "s" -sht -releaseName ("");
+hotkey -keyShortcut "c" -sht -name ("dR_connectToolNameCommand");
+hotkey -keyShortcut "u" -sht -releaseName ("");
+hotkey -keyShortcut "s" -name ("SuperfastBevelNameCommand");
+hotkey -keyShortcut "u" -sht -name ("ShowAllNameCommand");
+hotkey -keyShortcut "c" -alt -name ("arc_selectThroughONNameCommand");
+hotkeyCtx -type "Editor" -addClient "polyTexturePlacementPanel";
+hotkeyCtx -type "Editor" -addClient "profilerPanel";
+hotkeyCtx -type "Editor" -addClient "shapePanel";
+hotkeyCtx -type "Editor" -addClient "graphEditor";
+hotkeyCtx -type "Editor" -addClient "outlinerPanel";
+hotkeyCtx -type "Editor" -addClient "hyperGraphPanel";
+hotkeyCtx -type "Editor" -addClient "timeEditorPanel";
+hotkeyCtx -type "Editor" -addClient "posePanel";
+hotkeyCtx -type "Editor" -addClient "hyperShadePanel";
+hotkeyCtx -type "Editor" -addClient "nodeEditorPanel";
+hotkeyCtx -type "Tool" -addClient "polyCutUV";
+hotkeyCtx -type "Tool" -addClient "xgmIGBrush";
+hotkeyCtx -type "Tool" -addClient "Unfold3DBrush";
+hotkeyCtx -type "Tool" -addClient "SymmetrizeUVBrush";
+hotkeyCtx -type "Tool" -addClient "sculptMeshCache";
+hotkeyCtx -type "Tool" -addClient "texSculptCacheContext";
+hotkeyCtx -type "Tool" -addClient "texCutContext";
